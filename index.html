@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>My Valentine 💖</title>
+
+<style>
+body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Arial', cursive;
+    background: linear-gradient(to top right, #ff9a9e, #fad0c4);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    overflow: hidden;
+    text-align: center;
+}
+
+.container {
+    background: rgba(255, 255, 255, 0.2);
+    padding: 40px;
+    border-radius: 20px;
+    backdrop-filter: blur(10px);
+    box-shadow: 0 0 30px rgba(255, 0, 100, 0.3);
+    max-width: 400px;
+}
+
+h1 {
+    color: #fff;
+    font-size: 28px;
+}
+
+button {
+    margin-top: 20px;
+    padding: 12px 25px;
+    border: none;
+    border-radius: 30px;
+    background: #ff4b7d;
+    color: white;
+    font-size: 16px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+button:hover {
+    background: #ff1e5a;
+    transform: scale(1.1);
+}
+
+.message {
+    margin-top: 20px;
+    font-size: 20px;
+    color: white;
+    min-height: 60px;
+    transition: opacity 1s;
+}
+
+/* Floating hearts */
+.heart {
+    position: absolute;
+    bottom: -20px;
+    font-size: 20px;
+    animation: float 6s linear infinite;
+    color: rgba(255, 255, 255, 0.7);
+}
+
+@keyframes float {
+    0% { transform: translateY(0) scale(1); opacity: 1; }
+    100% { transform: translateY(-100vh) scale(1.5); opacity: 0; }
+}
+</style>
+</head>
+
+<body>
+
+<div class="container
+    <h1>Happy Valentine's Day 💘</h1>
+    <button onclick="startMessages()">Tap to Start 💖</button>
+    <div class="message" id="message"></div>
+</div>
+
+<script>
+const messages = [
+    "Hey my love 💕",
+    "I just wanted to remind you...",
+    "You are the best thing that ever happened to me ❤️",
+    "Your smile makes my world brighter ✨",
+    "Every moment with you feels magical 💫",
+    " Just know no matter how much we fight , i will never leave your site haa bas kuch ghante baat nahi karungi but jaungi nahi kahi so dw much "
+   " I want to stay with u , marry u , grow old together with u , give u the love u have always yearned for "
+    " I Love u from the bottom of my heart and you're my first LOVE ..."
+    " And haa I believe I made the best decision of my life when i said yes to u 🙈"
+    " I Love u Anand , mere chikneeee 😛"
+    "Happy valentines day ladleeee 😛🤙🏻"
+  
+];
+
+let index = 0;
+
+function startMessages() {
+    const msg = document.getElementById("message");
+    
+    if (index < messages.length) {
+        msg.style.opacity = 0;
+
+        setTimeout(() => {
+            msg.innerHTML = messages[index];
+            msg.style.opacity = 1;
+            index++;
+        }, 500);
+    }
+}
+
+// Create floating hearts
+function createHeart() {
+    const heart = document.createElement("div");
+    heart.classList.add("heart");
+    heart.innerHTML = "💗";
+    heart.style.left = Math.random() * 100 + "vw";
+    heart.style.fontSize = Math.random() * 20 + 15 + "px";
+    heart.style.animationDuration = Math.random() * 3 + 3 + "s";
+    document.body.appendChild(heart);
+
+    setTimeout(() => {
+        heart.remove();
+    }, 6000);
+}
+
+setInterval(createHeart, 500);
+</script>
+
+</body>
+</html>
