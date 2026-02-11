@@ -1,70 +1,28 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>For You ❤️</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>For You</title>
     <style>
-        :root { --pink: #ff4d6d; --light-pink: #ffccd5; }
-        body { 
-            margin: 0; padding: 0; 
-            background: #fff0f3; 
-            font-family: 'Arial', sans-serif; 
-            display: flex; justify-content: center; align-items: center; 
-            height: 100vh; overflow: hidden; 
-        }
-        #box {
-            background: white; padding: 30px; border-radius: 20px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-            text-align: center; width: 80%; max-width: 400px;
-            position: relative; z-index: 100;
-        }
-        .bunny { width: 140px; margin-bottom: 15px; }
-        h1 { color: var(--pink); font-size: 1.5rem; margin-bottom: 20px; }
-        .btns { display: flex; justify-content: center; gap: 15px; }
-        
-        button {
-            padding: 15px 25px; font-size: 1rem; font-weight: bold;
-            border: none; border-radius: 10px; cursor: pointer;
-            transition: 0.2s; touch-action: manipulation;
-        }
-        #yesBtn { background: #4CAF50; color: white; }
-        #noBtn { background: var(--pink); color: white; }
-
-        #messageArea { display: none; }
-        .msg-text { color: #800f2f; font-size: 1.2rem; font-weight: bold; min-height: 50px; }
-
-        /* Heart Animation */
-        .heart {
-            position: fixed; top: -10%; color: var(--pink);
-            font-size: 20px; user-select: none; pointer-events: none;
-            animation: fall linear forwards; z-index: 1;
-        }
-        @keyframes fall { to { transform: translateY(110vh) rotate(360deg); } }
+        body { background: #fff0f3; font-family: sans-serif; text-align: center; padding-top: 50px; }
+        .card { background: white; padding: 20px; border-radius: 20px; display: inline-block; box-shadow: 0 4px 10px rgba(0,0,0,0.1); width: 80%; max-width: 300px; }
+        button { padding: 15px 25px; margin: 10px; border: none; border-radius: 10px; font-weight: bold; cursor: pointer; }
+        #yes { background: #ff4d6d; color: white; }
+        #no { background: #eee; }
+        .heart { position: fixed; top: -20px; animation: fall 3s linear forwards; }
+        @keyframes fall { to { transform: translateY(110vh); } }
     </style>
 </head>
 <body>
-
-    <div id="box">
-        <div id="questionUI">
-            <img src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExOHIycXNid2Z4bm9oZzZxd3R4bm9oZzZxd3R4bm9oZzZxd3R4bm9oZyZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9cw/cLS1cfxvGOPVpf9g3y/giphy.gif" class="bunny">
-            <h1>Will you be my Valentine? ❤️</h1>
-            <div class="btns">
-                <button id="yesBtn" onclick="handleYes()">YES!</button>
-                <button id="noBtn" onclick="handleNo()">NO</button>
-            </div>
-        </div>
-
-        <div id="messageArea">
-            <img src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExOHIycXNid2Z4bm9oZzZxd3R4bm9oZzZxd3R4bm9oZzZxd3R4bm9oZyZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9cw/Y8S98S762923hT9h8E/giphy.gif" class="bunny">
-            <p id="msg" class="msg-text"></p>
-        </div>
+    <div id="card" class="card">
+        <img src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExOHIycXNid2Z4bm9oZzZxd3R4bm9oZzZxd3R4bm9oZzZxd3R4bm9oZyZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9cw/cLS1cfxvGOPVpf9g3y/giphy.gif" width="150">
+        <h1 id="title">Will you be my Valentine?</h1>
+        <button id="yes" onclick="start()">YES</button>
+        <button id="no" onclick="alert('Try again! 😉')">NO</button>
     </div>
 
     <script>
-        const messages = [
-            
-            "Hey my love 💕",
+        const msgs = [ "Hey my love 💕",
             "I just wanted to remind you...",
             "You are the best thing that ever happened to me ❤️",
             "Your smile makes my world brighter ✨",
@@ -76,55 +34,27 @@
             " I Love u Anand , mere chikneeee 😛"
             "Happy valentines day ladleeee 😛🤙🏻"       
 
-        ];
-
-        function handleNo() {
-            const yes = document.getElementById('yesBtn');
-            const no = document.getElementById('noBtn');
-            // Make "Yes" grow every time "No" is clicked
-            let currentSize = parseFloat(window.getComputedStyle(yes).fontSize);
-            yes.style.fontSize = (currentSize + 10) + 'px';
-            yes.style.padding = (currentSize + 5) + 'px';
-            no.innerText = "Are you sure? 🥺";
-        }
-
-        function handleYes() {
-            // Force hide question and show messages
-            document.getElementById('questionUI').style.display = 'none';
-            document.getElementById('messageArea').style.display = 'block';
-            
-            // Start heart rain
-            setInterval(spawnHeart, 300);
-            
-            // Start messages
+];
+        function start() {
             let i = 0;
-            const textDisplay = document.getElementById('msg');
-            
-            function next() {
-                if (i < messages.length) {
-                    textDisplay.innerText = messages[i];
-                    i++;
-                    setTimeout(next, 2500);
-                }
+            const title = document.getElementById('title');
+            document.getElementById('no').style.display = 'none';
+            setInterval(() => {
+                const h = document.createElement('div');
+                h.className = 'heart'; h.innerHTML = '❤️';
+                h.style.left = Math.random() * 100 + 'vw';
+                document.body.appendChild(h);
+            }, 300);
+            function show() {
+                if(i < msgs.length) { title.innerText = msgs[i++]; setTimeout(show, 2000); }
             }
-            next();
-        }
-
-        function spawnHeart() {
-            const h = document.createElement('div');
-            h.className = 'heart';
-            h.innerHTML = '❤️';
-            h.style.left = Math.random() * 100 + 'vw';
-            h.style.animationDuration = (Math.random() * 2 + 3) + 's';
-            document.body.appendChild(h);
-            setTimeout(() => h.remove(), 5000);
+            show();
         }
     </script>
 </body>
 </html>
-        
+
 
             
        
-
-
+           
