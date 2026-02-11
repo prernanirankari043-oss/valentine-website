@@ -3,39 +3,37 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>For You ❤️</title>
-    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+    <title>For My Valentine</title>
     <style>
         body {
             margin: 0;
+            background-color: #ffafbd;
+            background-image: linear-gradient(45deg, #ffafbd 0%, #ffc3a0 100%);
             height: 100vh;
             display: flex;
             justify-content: center;
             align-items: center;
-            background-color: #fff0f3;
-            font-family: 'Comic Sans MS', cursive, sans-serif;
+            font-family: 'Arial', sans-serif;
             overflow: hidden;
+            text-align: center;
         }
 
-        #card {
+        #main-card {
             background: white;
             padding: 30px;
-            border-radius: 25px;
-            box-shadow: 0 10px 30px rgba(255, 77, 109, 0.2);
-            text-align: center;
-            max-width: 350px;
-            width: 90%;
-            transition: all 0.5s ease;
+            border-radius: 20px;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+            width: 85%;
+            max-width: 400px;
+            position: relative;
+            z-index: 10;
         }
 
-        h1 { color: #ff4d6d; font-size: 1.8rem; }
-        
-        .gif-container img {
-            width: 150px;
-            margin-bottom: 15px;
-        }
+        .bunny-img { width: 150px; margin-bottom: 20px; }
 
-        .buttons {
+        h1 { color: #d63384; font-size: 24px; }
+
+        .btn-container {
             display: flex;
             justify-content: center;
             gap: 20px;
@@ -43,32 +41,35 @@
         }
 
         button {
-            padding: 12px 25px;
-            font-size: 1rem;
+            padding: 15px 30px;
+            font-size: 18px;
             border: none;
-            border-radius: 15px;
+            border-radius: 10px;
             cursor: pointer;
             font-weight: bold;
+            touch-action: manipulation; /* Makes it work better on mobile */
         }
 
-        #yesBtn { background-color: #ff4d6d; color: white; transition: 0.3s; }
-        #yesBtn:hover { transform: scale(1.1); background-color: #ff758f; }
+        #yes-btn { background-color: #4CAF50; color: white; }
+        #no-btn { background-color: #f44336; color: white; }
 
-        #noBtn { background-color: #fb6f92; color: white; position: relative; }
-
-        #messageArea {
-            display: none;
-            font-size: 1.2rem;
-            line-height: 1.6;
-            color: #590d22;
+        /* Secret Message Styles */
+        #message-screen { display: none; }
+        .message-text {
+            font-size: 22px;
+            color: #d63384;
+            font-weight: bold;
+            margin-top: 20px;
+            min-height: 60px;
         }
 
-        .heart-bg {
+        /* Pure CSS Animations */
+        .heart {
             position: absolute;
-            top: -10%;
-            animation: fall linear infinite;
             color: #ff4d6d;
-            opacity: 0.6;
+            font-size: 30px;
+            top: -50px;
+            animation: fall linear infinite;
         }
 
         @keyframes fall {
@@ -78,25 +79,25 @@
 </head>
 <body>
 
-    <div id="card">
-        <div id="questionUI">
-            <div class="gif-container">
-                <img src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExOHIycXNid2Z4bm9oZzZxd3R4bm9oZzZxd3R4bm9oZzZxd3R4bm9oZyZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9cw/cLS1cfxvGOPVpf9g3y/giphy.gif" alt="Cute Cat">
-            </div>
+    <div id="main-card">
+        <div id="question-screen">
+            <img src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExOHIycXNid2Z4bm9oZzZxd3R4bm9oZzZxd3R4bm9oZzZxd3R4bm9oZyZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9cw/cLS1cfxvGOPVpf9g3y/giphy.gif" class="bunny-img">
             <h1>Will you be my Valentine? ❤️</h1>
-            <div class="buttons">
-                <button id="yesBtn" onclick="showAnimations()">YES!</button>
-                <button id="noBtn" onmouseover="dodge()">No</button>
+            <div class="btn-container">
+                <button id="yes-btn" onclick="celebrate()">YES</button>
+                <button id="no-btn" onclick="moveNo()">NO</button>
             </div>
         </div>
 
-        <div id="messageArea">
-            <p id="text"></p>
+        <div id="message-screen">
+            <img src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExOHIycXNid2Z4bm9oZzZxd3R4bm9oZzZxd3R4bm9oZzZxd3R4bm9oZyZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9cw/Y8S98S762923hT9h8E/giphy.gif" class="bunny-img">
+            <div id="text-display" class="message-text"></div>
         </div>
     </div>
 
     <script>
-        const customMessages = [
+        const messages = [
+            
         "Hey my love 💕",
         "I just wanted to remind you...",
         "You are the best thing that ever happened to me ❤️",
@@ -107,13 +108,14 @@
         " I Love u from the bottom of my heart and you're my first LOVE ..."
         " And haa I believe I made the best decision of my life when i said yes to u 🙈"
         " I Love u Anand , mere chikneeee 😛"
-        "Happy valentines day ladleeee 😛🤙🏻"
+        "Happy valentines day ladleeee 😛🤙🏻"       
 
             
         ];
 
-        function dodge() {
-            const btn = document.getElementById('noBtn');
+        // Function for the "NO" button to jump away
+        function moveNo() {
+            const btn = document.getElementById('no-btn');
             const x = Math.random() * (window.innerWidth - btn.offsetWidth);
             const y = Math.random() * (window.innerHeight - btn.offsetHeight);
             btn.style.position = "fixed";
@@ -121,55 +123,43 @@
             btn.style.top = y + "px";
         }
 
-        function showAnimations() {
-            // 1. Trigger Confetti
-            confetti({
-                particleCount: 150,
-                spread: 70,
-                origin: { y: 0.6 },
-                colors: ['#ff4d6d', '#ff758f', '#ffb3c1']
-            });
-
-            // 2. Start Floating Hearts
-            setInterval(createHeart, 300);
-
-            // 3. Switch UI
-            document.getElementById('questionUI').style.display = 'none';
-            document.getElementById('messageArea').style.display = 'block';
+        // The logic when "YES" is clicked
+        function celebrate() {
+            // Hide question, show messages
+            document.getElementById('question-screen').style.display = 'none';
+            document.getElementById('message-screen').style.display = 'block';
             
-            displayMessages();
-        }
-
-        async function displayMessages() {
-            const textEl = document.getElementById('text');
-            for (let i = 0; i < customMessages.length; i++) {
-                textEl.innerHTML = customMessages[i];
-                textEl.style.opacity = 0;
-                // Simple fade in effect
-                let opacity = 0;
-                while (opacity < 1) {
-                    opacity += 0.1;
-                    textEl.style.opacity = opacity;
-                    await new Promise(r => setTimeout(r, 50));
+            // Start heart animation
+            setInterval(createHeart, 200);
+            
+            // Start showing messages one by one
+            let i = 0;
+            const textElement = document.getElementById('text-display');
+            
+            function nextMsg() {
+                if (i < messages.length) {
+                    textElement.innerHTML = messages[i];
+                    i++;
+                    setTimeout(nextMsg, 2500); // Change message every 2.5 seconds
                 }
-                await new Promise(r => setTimeout(r, 2000)); // Wait 2 seconds per message
             }
+            nextMsg();
         }
 
+        // Heart animation function
         function createHeart() {
             const heart = document.createElement('div');
+            heart.classList.add('heart');
             heart.innerHTML = '❤️';
-            heart.classList.add('heart-bg');
-            heart.style.left = Math.random() * 100 + 'vw';
-            heart.style.fontSize = (Math.random() * 20 + 10) + 'px';
-            heart.style.animationDuration = (Math.random() * 3 + 2) + 's';
+            heart.style.left = Math.random() * 100 + "vw";
+            heart.style.animationDuration = (Math.random() * 2 + 3) + "s";
             document.body.appendChild(heart);
-            setTimeout(() => heart.remove(), 5000);
+            // Clean up hearts so it doesn't crash
+            setTimeout(() => { heart.remove(); }, 4000);
         }
     </script>
 </body>
 </html>
        
-
 
 
