@@ -3,148 +3,156 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>My Valentine 💖</title>
-
+<title>Will You Be My Valentine?</title>
 <style>
 body {
     margin: 0;
     padding: 0;
-    font-family: Arial, sans-serif;
-    background: linear-gradient(to top right, #ff9a9e, #fad0c4);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    overflow: hidden;
+    font-family: 'Comic Sans MS', cursive;
+    background: linear-gradient(135deg, #ff9a9e, #fad0c4);
     text-align: center;
+    overflow: hidden;
 }
 
 .container {
-    background: rgba(255, 255, 255, 0.2);
-    padding: 40px;
-    border-radius: 20px;
-    backdrop-filter: blur(10px);
-    box-shadow: 0 0 30px rgba(255, 0, 100, 0.3);
-    max-width: 400px;
+    margin-top: 100px;
 }
 
 h1 {
+    font-size: 40px;
     color: white;
 }
 
 button {
-    margin-top: 20px;
-    padding: 12px 25px;
+    padding: 15px 30px;
+    font-size: 20px;
     border: none;
     border-radius: 30px;
-    background: #ff4b7d;
-    color: white;
-    font-size: 16px;
     cursor: pointer;
+    margin: 20px;
     transition: 0.3s;
 }
 
-button:hover {
-    background: #ff1e5a;
-    transform: scale(1.1);
+.yes-btn {
+    background-color: #ff4d6d;
+    color: white;
+}
+
+.no-btn {
+    background-color: white;
+    color: #ff4d6d;
+    position: absolute;
+}
+
+.heart {
+    position: absolute;
+    color: red;
+    font-size: 24px;
+    animation: float 4s linear infinite;
+}
+
+@keyframes float {
+    0% { transform: translateY(100vh) scale(1); opacity: 1; }
+    100% { transform: translateY(-10vh) scale(1.5); opacity: 0; }
 }
 
 .message {
-    margin-top: 20px;
-    font-size: 20px;
+    font-size: 28px;
     color: white;
-    min-height: 60px;
+    margin-top: 20px;
     opacity: 0;
     transition: opacity 1s;
 }
 
-/* Floating hearts */
-.heart {
-    position: absolute;
-    bottom: -20px;
-    font-size: 20px;
-    animation: float 6s linear infinite;
-    color: rgba(255, 255, 255, 0.7);
-}
-
-@keyframes float {
-    0% { transform: translateY(0) scale(1); opacity: 1; }
-    100% { transform: translateY(-100vh) scale(1.5); opacity: 0; }
+.final {
+    font-size: 40px;
+    color: yellow;
+    margin-top: 30px;
+    display: none;
 }
 </style>
 </head>
-
 <body>
 
-<div class="container">
-    <h1>Happy Valentine's Day 💘</h1>
-    <button id="startBtn">Tap to Start 💖</button>
-    <div class="message" id="message"></div>
+<div class="container" id="main">
+    <h1>Will You Be My Valentine? 💖</h1>
+    <button class="yes-btn" onclick="startLove()">Yes 💕</button>
+    <button class="no-btn" onmouseover="moveNo()">No 😜</button>
 </div>
 
+<div id="messages"></div>
+<div class="final" id="finalMessage">Happy Valentine's Day My Love 💘✨</div>
+
 <script>
-const messages = [
-   "Hey my love 💕",
-    "I just wanted to remind you...",
-    "You are the best thing that ever happened to me ❤️",
-    "Your smile makes my world brighter ✨",
-    "Every moment with you feels magical 💫",
-    " Just know no matter how much we fight , i will never leave your site haa bas kuch ghante baat nahi karungi but jaungi nahi kahi so dw much "
-   " I want to stay with u , marry u , grow old together with u , give u the love u have always yearned for "
-    " I Love u from the bottom of my heart and you're my first LOVE ..."
-    " And haa I believe I made the best decision of my life when i said yes to u 🙈"
-    " I Love u Anand , mere chikneeee 😛"
-    "Happy valentines day ladleeee 😛🤙🏻"
-];
 
-let index = 0;
-let interval;
-
-const btn = document.getElementById("startBtn");
-const msg = document.getElementById("message");
-
-btn.addEventListener("click", function() {
-    btn.style.display = "none"; // hide button
-    showMessage();
-
-    interval = setInterval(() => {
-        showMessage();
-    }, 2500);
-});
-
-function showMessage() {
-    if (index < messages.length) {
-        msg.style.opacity = 0;
-
-        setTimeout(() => {
-            msg.innerHTML = messages[index];
-            msg.style.opacity = 1;
-            index++;
-        }, 500);
-    } else {
-        clearInterval(interval);
-    }
+function moveNo() {
+    const btn = document.querySelector('.no-btn');
+    btn.style.top = Math.random() * window.innerHeight + "px";
+    btn.style.left = Math.random() * window.innerWidth + "px";
 }
 
-// Create floating hearts
 function createHeart() {
     const heart = document.createElement("div");
     heart.classList.add("heart");
-    heart.innerHTML = "💗";
-    heart.style.left = Math.random() * 100 + "vw";
-    heart.style.fontSize = Math.random() * 20 + 15 + "px";
-    heart.style.animationDuration = Math.random() * 3 + 3 + "s";
+    heart.innerHTML = "💖";
+    heart.style.left = Math.random() * window.innerWidth + "px";
+    heart.style.fontSize = Math.random() * 20 + 20 + "px";
     document.body.appendChild(heart);
 
     setTimeout(() => {
         heart.remove();
-    }, 6000);
+    }, 4000);
 }
 
-setInterval(createHeart, 500);
+function startLove() {
+    document.getElementById("main").style.display = "none";
+
+    // Floating hearts
+    setInterval(createHeart, 300);
+
+    const messages = [
+        "Hey my love 💕",
+        "I just wanted to remind you...",
+        "You are the best thing that ever happened to me ❤️",
+        "Your smile makes my world brighter ✨",
+        "Every moment with you feels magical 💫",
+        " Just know no matter how much we fight , i will never leave your site haa bas kuch ghante baat nahi karungi but jaungi nahi kahi so dw much "
+        " I want to stay with u , marry u , grow old together with u , give u the love u have always yearned for "
+        " I Love u from the bottom of my heart and you're my first LOVE ..."
+        " And haa I believe I made the best decision of my life when i said yes to u 🙈"
+        " I Love u Anand , mere chikneeee 😛"
+        "Happy valentines day ladleeee 😛🤙🏻"
+    ];
+
+    let i = 0;
+    const messageDiv = document.getElementById("messages");
+
+    function showMessage() {
+        if (i < messages.length) {
+            const msg = document.createElement("div");
+            msg.classList.add("message");
+            msg.innerHTML = messages[i];
+            messageDiv.appendChild(msg);
+
+            setTimeout(() => {
+                msg.style.opacity = 1;
+            }, 100);
+
+            i++;
+            setTimeout(showMessage, 2000);
+        } else {
+            document.getElementById("finalMessage").style.display = "block";
+        }
+    }
+
+    showMessage();
+}
+
 </script>
 
 </body>
 </html>
+
+
 
 
