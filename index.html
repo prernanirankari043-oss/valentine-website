@@ -1,142 +1,82 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>A Special Surprise</title>
+    <title>For You</title>
     <style>
-        body {
-            margin: 0;
-            padding: 0;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            background-color: #ffeef2;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            overflow: hidden;
-            text-align: center;
+        body { 
+            background: #fff0f3; 
+            font-family: sans-serif; 
+            display: flex; 
+            justify-content: center; 
+            align-items: center; 
+            height: 100vh; 
+            margin: 0; 
         }
-
-        #container {
-            background: white;
-            padding: 2rem;
-            border-radius: 20px;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
-            z-index: 10;
-            max-width: 400px;
+        #box { 
+            background: white; 
+            padding: 30px; 
+            border-radius: 20px; 
+            text-align: center; 
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
         }
-
-        h1 { color: #ff4d6d; }
-        
-        .buttons {
-            margin-top: 20px;
-            display: flex;
-            justify-content: center;
-            gap: 15px;
-        }
-
-        button {
-            padding: 10px 25px;
-            font-size: 1.1rem;
-            border: none;
-            border-radius: 50px;
+        button { 
+            padding: 15px 25px; 
+            font-size: 18px; 
+            margin: 10px; 
+            border: none; 
+            border-radius: 10px; 
             cursor: pointer;
-            transition: transform 0.2s;
         }
-
-        #yesBtn { background-color: #ff4d6d; color: white; }
-        #noBtn { background-color: #ddd; color: #333; position: relative; }
-
-        .message-box {
-            display: none;
-            font-size: 1.3rem;
-            color: #ff4d6d;
-            font-weight: bold;
-        }
-
-        /* Floating Hearts Animation */
-        .heart {
-            position: absolute;
-            color: #ff4d6d;
-            font-size: 20px;
-            top: -20px;
-            animation: fall linear forwards;
-        }
-
-        @keyframes fall {
-            to { transform: translateY(105vh) rotate(360deg); }
-        }
+        #yes { background: #ff4d6d; color: white; }
+        #no { background: #adb5bd; color: white; }
+        .heart { position: fixed; top: -20px; animation: fall 3s linear forwards; }
+        @keyframes fall { to { transform: translateY(110vh); } }
     </style>
 </head>
 <body>
 
-    <div id="container">
-        <div id="initialQuestion">
-            <h1 id="mainHeading">Will you be my Valentine? ❤️</h1>
-            <div class="buttons">
-                <button id="yesBtn" onclick="startSurprise()">Yes!</button>
-                <button id="noBtn" onmouseover="moveButton()">No</button>
-            </div>
-        </div>
-
-        <div id="messageDisplay" class="message-box">
-            <p id="dynamicText"></p>
+    <div id="box">
+        <img id="img" src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExOHIycXNid2Z4bm9oZzZxd3R4bm9oZzZxd3R4bm9oZzZxd3R4bm9oZyZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9cw/cLS1cfxvGOPVpf9g3y/giphy.gif" width="150">
+        <h1 id="text">Will you be my Valentine? ❤️</h1>
+        <div id="buttons">
+            <button id="yes" onclick="celebrate()">YES</button>
+            <button id="no" onclick="moveNo()">NO</button>
         </div>
     </div>
 
     <script>
-        const messages = [
-            "I knew you'd say yes! 🥰",
-            "You make my heart skip a beat...",
-            "Every moment with you is special ✨",
-            "I'm so lucky to have you.",
-            " No matter how much we fight i will never leave u, though might ignor for some hours",
-            "I want to grow old with u and stay forever ",
-            "uk remember when i said puri raat baihtke kuch kaam kar rhi thi yahi tha wo 😭,I've lost count of the number of codes i tried "
-            "And I Love You Anand like had se jyada ha woh baat alag hai express nahi hota itna 🫠 but Ily 🫶"
-            "Happy Valentine's Day, chikneeeee 🤭! ❤️"
-        ];
-
-        let msgIndex = 0;
-
-        // Make "No" button run away
-        function moveButton() {
-            const btn = document.getElementById('noBtn');
-            const x = Math.random() * (window.innerWidth - btn.offsetWidth);
-            const y = Math.random() * (window.innerHeight - btn.offsetHeight);
-            btn.style.position = 'absolute';
-            btn.style.left = x + 'px';
-            btn.style.top = y + 'px';
+        function moveNo() {
+            let x = Math.random() * (window.innerWidth - 100);
+            let y = Math.random() * (window.innerHeight - 100);
+            document.getElementById('no').style.position = 'fixed';
+            document.getElementById('no').style.left = x + 'px';
+            document.getElementById('no').style.top = y + 'px';
         }
 
-        function startSurprise() {
-            document.getElementById('initialQuestion').style.display = 'none';
-            document.getElementById('messageDisplay').style.display = 'block';
-            showNextMessage();
-            setInterval(createHeart, 300); // Start heart rain
-        }
+        function celebrate() {
+            // Change the text and image immediately
+            document.getElementById('text').innerHTML = "I knew you'd say yes! 🥰<br><br>Happy Valentine's Day! ❤️";
+            document.getElementById('img').src = "https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExOHIycXNid2Z4bm9oZzZxd3R4bm9oZzZxd3R4bm9oZzZxd3R4bm9oZyZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9cw/Y8S98S762923hT9h8E/giphy.gif";
+            
+            // Hide the buttons
+            document.getElementById('buttons').style.display = 'none';
 
-        function showNextMessage() {
-            if (msgIndex < messages.length) {
-                document.getElementById('dynamicText').innerText = messages[msgIndex];
-                msgIndex++;
-                setTimeout(showNextMessage, 2500); // Change message every 2.5 seconds
-            }
-        }
-
-        function createHeart() {
-            const heart = document.createElement('div');
-            heart.classList.add('heart');
-            heart.innerHTML = '❤️';
-            heart.style.left = Math.random() * 100 + 'vw';
-            heart.style.animationDuration = (Math.random() * 2 + 3) + 's';
-            document.body.appendChild(heart);
-            setTimeout(() => heart.remove(), 5000);
+            // Start simple heart rain
+            setInterval(() => {
+                let h = document.createElement('div');
+                h.className = 'heart';
+                h.innerHTML = '❤️';
+                h.style.left = Math.random() * 100 + 'vw';
+                document.body.appendChild(h);
+                setTimeout(() => h.remove(), 3000);
+            }, 200);
         }
     </script>
 </body>
 </html>
+
 
 
 
