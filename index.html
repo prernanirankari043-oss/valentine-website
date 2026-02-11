@@ -1,54 +1,77 @@
 <!DOCTYPE html>
 <html>
 <head>
+    <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>For You</title>
     <style>
-        body { background: #fff0f3; font-family: sans-serif; text-align: center; padding-top: 50px; }
-        .card { background: white; padding: 20px; border-radius: 20px; display: inline-block; box-shadow: 0 4px 10px rgba(0,0,0,0.1); width: 80%; max-width: 300px; }
-        button { padding: 15px 25px; margin: 10px; border: none; border-radius: 10px; font-weight: bold; cursor: pointer; }
+        body { 
+            background: #fff0f3; 
+            font-family: sans-serif; 
+            display: flex; 
+            justify-content: center; 
+            align-items: center; 
+            height: 100vh; 
+            margin: 0; 
+        }
+        #box { 
+            background: white; 
+            padding: 30px; 
+            border-radius: 20px; 
+            text-align: center; 
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        button { 
+            padding: 15px 25px; 
+            font-size: 18px; 
+            margin: 10px; 
+            border: none; 
+            border-radius: 10px; 
+            cursor: pointer;
+        }
         #yes { background: #ff4d6d; color: white; }
-        #no { background: #eee; }
+        #no { background: #adb5bd; color: white; }
         .heart { position: fixed; top: -20px; animation: fall 3s linear forwards; }
         @keyframes fall { to { transform: translateY(110vh); } }
     </style>
 </head>
 <body>
-    <div id="card" class="card">
-        <img src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExOHIycXNid2Z4bm9oZzZxd3R4bm9oZzZxd3R4bm9oZzZxd3R4bm9oZyZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9cw/cLS1cfxvGOPVpf9g3y/giphy.gif" width="150">
-        <h1 id="title">Will you be my Valentine?</h1>
-        <button id="yes" onclick="start()">YES</button>
-        <button id="no" onclick="alert('Try again! 😉')">NO</button>
+
+    <div id="box">
+        <img id="img" src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExOHIycXNid2Z4bm9oZzZxd3R4bm9oZzZxd3R4bm9oZzZxd3R4bm9oZyZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9cw/cLS1cfxvGOPVpf9g3y/giphy.gif" width="150">
+        <h1 id="text">Will you be my Valentine? ❤️</h1>
+        <div id="buttons">
+            <button id="yes" onclick="celebrate()">YES</button>
+            <button id="no" onclick="moveNo()">NO</button>
+        </div>
     </div>
 
     <script>
-        const msgs = [ "Hey my love 💕",
-            "I just wanted to remind you...",
-            "You are the best thing that ever happened to me ❤️",
-            "Your smile makes my world brighter ✨",
-            "Every moment with you feels magical 💫",
-            " Just know no matter how much we fight , i will never leave your site haa bas kuch ghante baat nahi karungi but jaungi nahi kahi so dw much "
-            " I want to stay with u , marry u , grow old together with u , give u the love u have always yearned for "
-            " I Love u from the bottom of my heart and you're my first LOVE ..."
-            " And haa I believe I made the best decision of my life when i said yes to u 🙈"
-            " I Love u Anand , mere chikneeee 😛"
-            "Happy valentines day ladleeee 😛🤙🏻"       
+        function moveNo() {
+            let x = Math.random() * (window.innerWidth - 100);
+            let y = Math.random() * (window.innerHeight - 100);
+            document.getElementById('no').style.position = 'fixed';
+            document.getElementById('no').style.left = x + 'px';
+            document.getElementById('no').style.top = y + 'px';
+        }
 
-];
-        function start() {
-            let i = 0;
-            const title = document.getElementById('title');
-            document.getElementById('no').style.display = 'none';
+        function celebrate() {
+            // Change the text and image immediately
+            document.getElementById('text').innerHTML = "I knew you'd say yes! 🥰<br><br>Happy Valentine's Day! chikneeee 😛❤️";
+            document.getElementById('img').src = "https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExOHIycXNid2Z4bm9oZzZxd3R4bm9oZzZxd3R4bm9oZzZxd3R4bm9oZyZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9cw/Y8S98S762923hT9h8E/giphy.gif";
+            
+            // Hide the buttons
+            document.getElementById('buttons').style.display = 'none';
+
+            // Start simple heart rain
             setInterval(() => {
-                const h = document.createElement('div');
-                h.className = 'heart'; h.innerHTML = '❤️';
+                let h = document.createElement('div');
+                h.className = 'heart';
+                h.innerHTML = '❤️';
                 h.style.left = Math.random() * 100 + 'vw';
                 document.body.appendChild(h);
-            }, 300);
-            function show() {
-                if(i < msgs.length) { title.innerText = msgs[i++]; setTimeout(show, 2000); }
-            }
-            show();
+                setTimeout(() => h.remove(), 3000);
+            }, 200);
         }
     </script>
 </body>
@@ -56,5 +79,3 @@
 
 
             
-       
-           
